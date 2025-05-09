@@ -29,7 +29,7 @@ function Review() {
       ];
   return (
    <>
-        <div className='bg-gradient-to-r from-amber-50 to-[rgb(250,235,215)] w-[85vw] mx-auto p-10 mt-10 rounded-3xl'>
+        <div className='bg-gradient-to-r from-amber-50 to-[rgb(250,235,215)] w-[85vw] mx-auto p-10 mt-10 rounded-3xl mb-10'>
             <div className='mb-5'>
                 <h2 className='font-semibold text-yellow-700 text-3xl mb-3'>What They Say</h2>
                 <h3 className='font-semibold text-[var(--gray-color)] '>Feedback from our lovely customer.</h3>
@@ -38,8 +38,8 @@ function Review() {
                 <div className=''>
                   <Swiper 
                   modules={[Navigation, Pagination, Autoplay]}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 1000 }}
+                //   pagination={{ clickable: true }}
+                  autoplay={{ delay: 1500 }}
                   loop={true}
                   spaceBetween={30}
                   slidesPerView={3}
@@ -52,7 +52,7 @@ function Review() {
 
                     {reviews.map((user,index)=>(
                          <SwiperSlide key={index}>
-                             <div className='border-2 w-[25vw] h-[25vh] rounded-3xl p-5 '>
+                             <div className=' mt-5 mb-5 w-[25vw] h-[35vh] rounded-3xl p-5 box'>
                             <div className='flex gap-5 items-center mb-3'>
                                 <img className='w-[5vw] rounded-full' src="img/review-1.jpg" alt="" />
                                 <div>
@@ -67,7 +67,11 @@ function Review() {
                                 </div>
                             </div>
                             <div>
-                                <p className='text-[var(--gray-color)]'>{user.review}</p>
+                                <p className='text-[var(--gray-color)] mb-5'>{user.review}</p>
+                                <div className='flex '>
+                                    <img src="img/insta.png" alt="" />
+                                    <img src="img/mail.png" alt="" />
+                                </div>
                             </div>
                         </div>
                          </SwiperSlide>
