@@ -2,6 +2,7 @@
 @import "tailwindcss";
 :root{
   --bg-color: linear-gradient(to right, #fef3c7, #faebd7);
+  --gray-color: #aaa0a0;
 }
 
 * {
@@ -44,4 +45,13 @@
 }
 .ani-hero-person{
   animation: hero-person 500ms ease-in-out;
+}
+
+.hero-btn{
+  & :hover{
+    span {
+      transition: all 0.3s ease-in-out;
+      padding-right: 10px;
+    }
+  }
 }
