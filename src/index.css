@@ -29,20 +29,19 @@
     opacity: 100;
   }
 }
-@keyframes hero-p {
+@keyframes hero-person {
   0%{
-    /* transform: translateY(-100%); */
-    opacity: 0;
+    transform: translateX(10%);
   }
   100%{
-    /* transform: translateY(0); */
-    opacity: 100;
+    transform: translateY(0);
   }
 }
 
-.ani-hero-p{
-  animation: hero-p 1s ease-in-out;
-}
+
 .ani-hero{
   animation: hero 1s ease-in-out;
+}
+.ani-hero-person{
+  animation: hero-person 500ms ease-in-out;
 }
