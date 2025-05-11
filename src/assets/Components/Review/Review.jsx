@@ -48,11 +48,12 @@ function Review() {
                     768: { slidesPerView: 2 },
                     1024: { slidesPerView: 3 },
                   }}
+                  className=''
                   >
 
                     {reviews.map((user,index)=>(
                          <SwiperSlide key={index}>
-                             <div className=' mt-5 mb-5 w-[25vw] h-[35vh] rounded-3xl p-5 box'>
+                             <div className='flex flex-col justify-center mt-5 mb-5 w-[25vw] h-[35vh] rounded-3xl p-5 box'>
                             <div className='flex gap-5 items-center mb-3'>
                                 <img className='w-[5vw] rounded-full' src="img/review-1.jpg" alt="" />
                                 <div>

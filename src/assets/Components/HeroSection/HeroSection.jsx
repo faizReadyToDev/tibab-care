@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '../Button/Button'
 
 function HeroSection() {
   return (
@@ -9,9 +10,7 @@ function HeroSection() {
                     <h1 className='text-5xl font-bold text-yellow-700 mb-5'>Welcome to Tabib Care</h1>
                     <h2 className='text-2xl font-semi-bold mb-5'>Natural Wellness, Timeless Benefits.</h2>
                     <p className="font-semi-bold text-[var(--gray-color)]">Empowering you with high-quality herbal products inspired by Unani, Ayurveda, and nature.</p>
-                   <div className='hero-btn'>
-                    <button className='bg-yellow-700 cursor-pointer rounded-full px-5 py-3 mt-5 text-white flex '><span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg></span>Shop Now</button>
-                   </div>
+                    <Button/>
                 
                 </div>
                 <div className='relative mt-10'>
