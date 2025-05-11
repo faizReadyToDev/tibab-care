@@ -63,8 +63,97 @@ function ProductsDetail() {
                   </div>
           </div>
         </div>
-        <div className='border overflow-y-scroll w-[50vw]'>
+        <div className='overflow-y-scroll w-[45vw] h-[70vh] p-10 pb-4 pt-5 scroll-container'>
+                <div className=''> 
+                  <p className='text-[var(--gray-color)]'>Tabib Care</p>
+                  <h1 className='text-4xl font-bold text-yellow-700 mb-3'>Tibb Hair Oil (100ml)</h1>
+                  <div className='flex items-center gap-1 w-[4vw] bg-black pl-2 rounded-md'>
+                    <p className='text-white'>4.6</p>
+                    <img className='w-[1vw]' src="img/rating-star.png" alt="" />
+                  </div>
+                  <div className='mt-5 flex items-center'>
+                    <p className=''><span className='font-semibold text-2xl mr-2'>₹339</span> </p>
+                    <div className='flex gap-2'>
+                      <span className='text-[var(--gray-color)] '><del>₹349</del></span> <span className='text-green-600 font-semibold'>20% off</span>
+                    </div>
+                  </div>
+                  <p className='text-xs text-red-600'>
+                    Hurry,Only 10 left left!
+                  </p>
+                  <div className='flex gap-20 mt-5'>
+                   <div>
+                      <p className='text-[var(--gray-color)] font-semibold mb-5'>Quantity:</p>
+                      <p className='text-[var(--gray-color)] font-semibold mb-18'>Highlights:</p>
+                      <p className='text-[var(--gray-color)] font-semibold'>Description:</p>
+                   </div>
+                   <div>
+                      <p className='border py-1 w-[4vw] flex justify-center border-[var(--gray-color)] font-semibold mb-2.5'>100 ml</p>
+                      <div className=''>
+                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> For Men & Women</p>
+                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> Suitable for all hair types</p>
+                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> Applied For Nourishment</p>
+                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> Sulfate Free</p>
+                      </div>
+                      <p>Olive Oil, Coconut Oil, Mustard Oil, black Seeds, Fenugreek Seeds, hibiscus flower, curry leaves e.t.c.
+                      </p>
+                   </div>
+                  </div>
+                </div>
 
+                <div>
+                  <h2 className='text-2xl font-semibold mt-10 border p-4 rounded-t-md'>Specification</h2>
+                  <div className=' border border-t-0 p-4'>
+                    <h3 className='mb-3'>In the Box</h3>
+                    <div className='flex gap-36'>
+                      <p className='text-[var(--gray-color)]'>Pack of </p>
+                      <span className='text-black'>1</span>
+                    </div>
+                  </div>
+                  <div className='border border-t-0 p-4'>
+                    <h3 className='mb-3'>General</h3>
+                    <div className='flex gap-25'>
+                      <div className=''>
+                        <p className='text-[var(--gray-color)] mb-2'>Brand </p>
+                        <p className='text-[var(--gray-color)] mb-2'>Model Name </p>
+                        <p className='text-[var(--gray-color)]  mb-2'>Ideal For </p>
+                        <p className='text-[var(--gray-color)] mb-2'>Applied For</p>
+                        <p className='text-[var(--gray-color)] mb-2'>Type</p>
+                        <p className='text-[var(--gray-color)] mb-2'>Sulfate Free</p>
+                        <p className='text-[var(--gray-color)] mb-2'>Hair Type</p>
+                        <p className='text-[var(--gray-color)] mb-2'>Container</p>
+                        <p className='text-[var(--gray-color)] mb-2 '>Maximum Shelf Life</p>
+                        <p className='text-[var(--gray-color)] mb-8'>Composition</p>
+                        <p className='text-[var(--gray-color)] mb-2 '>Net Quantity</p>
+                      </div>
+                      <div>
+                        <p className='text-black mb-2'>Tabib</p>
+                        <p className='text-black mb-2'>Tibb Hair Oil</p>
+                        <p className='text-black mb-2'>Men & Women</p>
+                        <p className='text-black mb-2'>Nourishment</p>
+                        <p className='text-black mb-2'>Hair</p>
+                        <p className='text-black mb-2'>Yes</p>
+                        <p className='text-black mb-2'>All Hair Types</p>
+                        <p className='text-black mb-2'>Bottle</p>
+                        <p className='text-black mb-8'>24 Months</p>
+                        <p className='text-black mb-2'>Olive Oil, Coconut Oil, Mustard Oil, black Seeds, Fenugreek Seeds, hibiscus flower, curry leaves e.t.c.
+                        </p>
+                        <p className='text-black mb-2 '>100 ml
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className=' border border-t-0 p-4 rounded-b-md'>
+                    <h3 className='mb-3'>Other Features</h3>
+                    <div className='flex gap-33'>
+                      <div className='w-[35%]'>
+                        <p className='text-[var(--gray-color)]'>For Hair </p>
+                      </div>
+                      <p className='text-black'>Apply Sufficient amount of Oil on the Tip of your fing
+on the scalp and massage it gently about 5-10 minutes Leave it overnight.
+</p>
+                    </div>
+                  </div>
+                </div>
         </div>
       </div>
 
