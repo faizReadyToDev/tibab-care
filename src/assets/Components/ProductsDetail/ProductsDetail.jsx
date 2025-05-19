@@ -78,7 +78,7 @@ function ProductsDetail() {
                     </div>
                   </div>
                   <p className='text-xs text-red-600'>
-                    Hurry,Only 10 left left!
+                    Hurry,Only 10 left!
                   </p>
                   <div className='flex gap-20 mt-5'>
                    <div>
@@ -122,8 +122,8 @@ function ProductsDetail() {
                         <p className='text-[var(--gray-color)] mb-2'>Hair Type</p>
                         <p className='text-[var(--gray-color)] mb-2'>Container</p>
                         <p className='text-[var(--gray-color)] mb-2 '>Maximum Shelf Life</p>
-                        <p className='text-[var(--gray-color)] mb-8'>Composition</p>
-                        <p className='text-[var(--gray-color)] mb-2 '>Net Quantity</p>
+                        <p className='text-[var(--gray-color)] mb-13'>Composition</p>
+                        <p className='text-[var(--gray-color)] mb-2'>Net Quantity</p>
                       </div>
                       <div>
                         <p className='text-black mb-2'>Tabib</p>
@@ -137,7 +137,7 @@ function ProductsDetail() {
                         <p className='text-black mb-8'>24 Months</p>
                         <p className='text-black mb-2'>Olive Oil, Coconut Oil, Mustard Oil, black Seeds, Fenugreek Seeds, hibiscus flower, curry leaves e.t.c.
                         </p>
-                        <p className='text-black mb-2 '>100 ml
+                        <p className='text-black mb-2'>100 ml
                         </p>
                       </div>
                     </div>
