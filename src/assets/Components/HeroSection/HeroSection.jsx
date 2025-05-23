@@ -1,5 +1,7 @@
 import React from 'react'
 import Button from '../Button/Button'
+import Review from '../Review/Review'
+import { NavLink } from 'react-router-dom'
 
 function HeroSection() {
   return (
@@ -10,7 +12,9 @@ function HeroSection() {
                     <h1 className='text-5xl font-bold text-yellow-700 mb-5'>Welcome to Tabib Care</h1>
                     <h2 className='text-2xl font-semi-bold mb-5'>Natural Wellness, Timeless Benefits.</h2>
                     <p className="font-semi-bold text-[var(--gray-color)]">Empowering you with high-quality herbal products inspired by Unani, Ayurveda, and nature.</p>
+                    <NavLink to={'/products'}>
                     <Button/>
+                    </NavLink>
                 
                 </div>
                 <div className='relative mt-10'>
@@ -21,6 +25,7 @@ function HeroSection() {
            </div>
 
         </div>
+        <Review/>
     
     
     </>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 function Header() {
   return (
@@ -11,10 +12,18 @@ function Header() {
                         </div>
                     <div className='bg-gradient-to-r from-amber-50 to-[#faebd7] rounded-t-4xl px-10 pt-4 pr-130'>
                             <ul className='flex gap-10 border rounded-full py-3 px-4 items-center justify-center'>
+                                <NavLink to={"/"}>
                                 <li>Home</li>
+                                </NavLink>
+                                <NavLink to={"/products"}>
                                 <li>Products</li>
+                                </NavLink>
+                                <NavLink to={"/about"}>
                                 <li>About</li>
-                                <li>Contact us</li>
+                                </NavLink>
+                                <NavLink to={"/review"}>
+                                <li>Review</li>
+                                </NavLink>
                             </ul>
                     </div>
                     </div>

@@ -6,28 +6,23 @@ import Footer from '../Footer/Footer'
 import ProductsDetail from '../ProductsDetail/ProductsDetail'
 import Product from '../Product/Product'
 import AboutUs from '../AboutUs/AboutUs'
+import { Route, BrowserRouter, Routes } from 'react-router-dom'
 
 function Section() {
   return (
    <>
     <div className=''>
         <div className='bg-black w-[90vw] mx-auto rounded-2xl h-[85vh] mt-[7.5vh] scroll-container'>
-            <Header/>
-            <HeroSection/>
-            <Review/>
-            <Product/>
-            <ProductsDetail/>
-            {/* <Footer/> */}
-            {/* <AboutUs/> */}
-
-            
-
-            
-            
-            
-          
-
-
+          <BrowserRouter>
+          <Header/>
+          <Routes>
+            <Route path='/' element={<HeroSection/>}/>
+            <Route path='/products' element={<Product/>}/>
+            <Route path='/product-detail' element={<ProductsDetail/>}/>
+            <Route path='/about' element={<AboutUs/>}/>
+            <Route path='/review' element={<Review/>}/>
+          </Routes>
+          </BrowserRouter>
         </div>
 
 
