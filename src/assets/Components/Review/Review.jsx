@@ -70,8 +70,8 @@ function Review() {
                             <div>
                                 <p className='text-[var(--gray-color)] mb-5'>{user.review}</p>
                                 <div className='flex '>
-                                    <img src="img/insta.png" alt="" />
-                                    <img src="img/mail.png" alt="" />
+                                    <img className='max-xl:w-[3vw]' src="img/insta.png" alt="" />
+                                    <img className='max-xl:w-[3vw]' src="img/mail.png" alt="" />
                                 </div>
                             </div>
                         </div>

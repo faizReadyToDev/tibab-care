@@ -40,14 +40,14 @@ function OurStory() {
   return (
     <>
       <div className='mt-20 p-10 pb-0 pt-0 flex gap-10 justify-center'>
-            <div className=' text-black border border-yellow-700 p-4 rounded-md'>
+            <div className=' text-black border border-yellow-700 p-4 rounded-md '>
              {ourStory.map((item, index) => (
             <h2
               key={index}
               onClick={() => setOurStoryData(item.phases)}
-              className='border p-4 rounded-md bg-black text-white text-center cursor-pointer hover:bg-yellow-900 transition'
+              className='border p-4 rounded-md bg-black text-white text-center cursor-pointer hover:bg-yellow-900 transition ourstory-heading'
             >
-              {item.phases}
+              <span className='ourstory-arrow'>{">"}</span> {item.phases}
             </h2>
           ))}
             </div>

@@ -36,7 +36,7 @@ function ProductsDetail() {
     <div className='bg-gradient-to-r from-amber-50 to-[rgb(250,235,215)] rounded-3xl w-[85vw] h-[70vh] mx-auto'>
       
       <div className='flex '>
-        <div className='flex w-[40vw] gap-10 mt-2 justify-center'>
+        <div className='flex w-[40vw] gap-10 mt-2 justify-center '>
           <div className='flex flex-col w-[3vw] ml-10'>
             {
               imgs.map((img, index) => (
@@ -55,7 +55,7 @@ function ProductsDetail() {
                   isImg ? <img className='h-[55vh] w-[20vw] rounded-md' src={productView} alt="" /> : <video controls autoplay muted loop className='h-[55vh] w-[20vw] rounded-md' src={productView} alt="" />
                 }
               </div>
-                  <div className='flex justify-between gap-2 mt-4'>
+                  <div className='flex justify-between gap-2 mt-4 max-xl:mt-1'>
                     <button className='border py-2 w-[11vw] rounded-md flex justify-center gap-1'> <span>
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M240-80q-33 0-56.5-23.5T160-160v-480q0-33 23.5-56.5T240-720h80q0-66 47-113t113-47q66 0 113 47t47 113h80q33 0 56.5 23.5T800-640v480q0 33-23.5 56.5T720-80H240Zm0-80h480v-480h-80v80q0 17-11.5 28.5T600-520q-17 0-28.5-11.5T560-560v-80H400v80q0 17-11.5 28.5T360-520q-17 0-28.5-11.5T320-560v-80h-80v480Zm160-560h160q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720ZM240-160v-480 480Z"/></svg></span> ADD TO CART</button>
                     <button className='border py-2 w-[11vw] rounded-md flex justify-center gap-1'> <span>
@@ -87,7 +87,7 @@ function ProductsDetail() {
                       <p className='text-[var(--gray-color)] font-semibold'>Description:</p>
                    </div>
                    <div>
-                      <p className='border py-1 w-[4vw] flex justify-center border-[var(--gray-color)] font-semibold mb-2.5'>100 ml</p>
+                      <p className='border py-1 w-[4vw] max-xl:w-[5vw] flex justify-center border-[var(--gray-color)] font-semibold mb-2.5'>100 ml</p>
                       <div className=''>
                         <p className='flex items-center'> <img src="img/dots.png" alt="" /> For Men & Women</p>
                         <p className='flex items-center'> <img src="img/dots.png" alt="" /> Suitable for all hair types</p>
@@ -122,7 +122,7 @@ function ProductsDetail() {
                         <p className='text-[var(--gray-color)] mb-2'>Hair Type</p>
                         <p className='text-[var(--gray-color)] mb-2'>Container</p>
                         <p className='text-[var(--gray-color)] mb-2 '>Maximum Shelf Life</p>
-                        <p className='text-[var(--gray-color)] mb-13'>Composition</p>
+                        <p className='text-[var(--gray-color)] mb-13 max-xl:mb-19'>Composition</p>
                         <p className='text-[var(--gray-color)] mb-2'>Net Quantity</p>
                       </div>
                       <div>
