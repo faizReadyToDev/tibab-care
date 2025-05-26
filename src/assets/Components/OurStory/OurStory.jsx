@@ -39,8 +39,8 @@ function OurStory() {
       const [ourStoryData, setOurStoryData] = useState("Our Journey Begins");
   return (
     <>
-      <div className='mt-20 p-10 pb-0 pt-0 flex gap-10 justify-center'>
-            <div className=' text-black border border-yellow-700 p-4 rounded-md '>
+      <div className='mt-20 p-10 pb-0 pt-0 flex gap-10 justify-center max-sm:flex-col overflow-scroll max-sm:p-0 max-sm:gap-5'>
+            <div className=' text-black border border-yellow-700 p-4 rounded-md max-sm:flex max-sm:p-2 text-nowrap overflow-scroll scroll-container'>
              {ourStory.map((item, index) => (
             <h2
               key={index}
@@ -51,7 +51,7 @@ function OurStory() {
             </h2>
           ))}
             </div>
-            <div className='w-[40vw]'>
+            <div className='w-[40vw] max-sm:w-[85vw] max-sm:mx-auto items-center flex justify-center max-sm:pb-15'>
               {
                 ourStory.filter((item) => item.phases === ourStoryData).map((item,index) => {
                   return (

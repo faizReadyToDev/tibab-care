@@ -7,13 +7,15 @@ import ProductsDetail from '../ProductsDetail/ProductsDetail'
 import Product from '../Product/Product'
 import AboutUs from '../AboutUs/AboutUs'
 import { Route, BrowserRouter, Routes } from 'react-router-dom'
+import PhoneMenu from '../PhoneMenu/PhoneMenu'
 
 function Section() {
   return (
    <>
     <div className=''>
-        <div className='bg-black w-[90vw] mx-auto rounded-2xl h-[85vh] mt-[7.5vh] scroll-container'>
+        <div className='bg-black w-[90vw] max-sm:w-[95vw] mx-auto rounded-2xl h-[85vh] mt-[7.5vh] scroll-container max-sm:mt-2 max-sm:h-auto'>
           <BrowserRouter>
+          <PhoneMenu/>
           <Header/>
           <Routes>
             <Route path='/' element={<HeroSection/>}/>
