@@ -5,7 +5,7 @@ function PhoneMenu({menuBar,setMenuBar}) {
    
   return (
     <>
-      <div onClick={() => setMenuBar(false)} className={`bg-black h-[100vh] w-[100vw] top-0 left-0 z-10 overflow-y-hidden ${menuBar ? 'fixed' : 'hidden'}`}>
+      <div onClick={() => setMenuBar(false)} className={`bg-black h-[100vh] w-[100vw] top-0 left-0 z-50 overflow-y-hidden ${menuBar ? 'fixed' : 'hidden'}`}>
         <div className='flex justify-end pr-10 pt-10'>
 
         <button >

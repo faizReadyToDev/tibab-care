@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 function ProductsDetail() {
   const [productView, setProductView] = useState("img/hero-img.png")
   const [isImg, setIsImg] = useState(true);
+  const [isZooming, setIsZooming] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const imageRef = useRef(null);
+  const containerRef = useRef(null);
   
   const imgs = [
     "img/hero-img.png",
@@ -27,6 +32,32 @@ function ProductsDetail() {
     setProductView(video);
     setIsImg(false);
   }
+
+  const handleMouseMove = (e) => {
+    if (!containerRef.current || !imageRef.current) return;
+    
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const imageRect = imageRef.current.getBoundingClientRect();
+    
+    // Cursor position relative to container
+    const cursorX = e.clientX - containerRect.left;
+    const cursorY = e.clientY - containerRect.top;
+    
+    // Zoom position as percentage of image
+    const zoomX = ((e.clientX - imageRect.left) / imageRect.width) * 100;
+    const zoomY = ((e.clientY - imageRect.top) / imageRect.height) * 100;
+    
+    setCursorPosition({ x: cursorX, y: cursorY });
+    setZoomPosition({ x: zoomX, y: zoomY });
+  };
+
+  const handleMouseEnter = () => {
+    setIsZooming(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsZooming(false);
+  };
   
   return (
 
@@ -36,124 +67,285 @@ function ProductsDetail() {
     <div className='bg-gradient-to-r from-amber-50 to-[rgb(250,235,215)] rounded-3xl w-[85vw] h-[70vh] max-sm:w-[90vw] max-sm:h-auto mx-auto'>
       
       <div className='flex max-sm:block max-sm:p-4'>
-        <div className='flex w-[40vw] gap-10 mt-2 justify-center max-sm:w-full max-sm:gap-1'>
-          <div className='flex flex-col w-[3vw] ml-10 max-sm:w-[14vw] max-sm:ml-0'>
+        <div className='flex w-[40vw] gap-6 mt-2 justify-center max-sm:w-full max-sm:gap-2'>
+          <div className='flex flex-col w-[4vw] ml-8 max-sm:w-[16vw] max-sm:ml-0 space-y-3 h-[55vh] overflow-y-auto scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-gray-100'>
             {
               imgs.map((img, index) => (
-                <img key={index} onClick={() => onClickHandlerImg(img)} className='border p-1.5 cursor-pointer' src={img} alt="" />
+                <div key={index} className='relative group'>
+                  <img 
+                    onClick={() => onClickHandlerImg(img)} 
+                    className='border-2 border-gray-200 hover:border-amber-400 p-2 cursor-pointer rounded-xl transition-all duration-300 hover:shadow-lg transform hover:scale-105' 
+                    src={img} 
+                    alt="" 
+                  />
+                  {productView === img && isImg && (
+                    <div className='absolute inset-0 border-2 border-amber-500 rounded-xl bg-amber-50/20'></div>
+                  )}
+                </div>
               ))
             }{
               videos.map((video, index) => (
-                <video  key={index} onClick={() => onClickHandlerVideo(video)} className='border p-1.5 cursor-pointer' src={video} alt="" />
+                <div key={index} className='relative group'>
+                  <video  
+                    onClick={() => onClickHandlerVideo(video)} 
+                    className='border-2 border-gray-200 hover:border-amber-400 p-2 cursor-pointer rounded-xl transition-all duration-300 hover:shadow-lg transform hover:scale-105' 
+                    src={video} 
+                    alt="" 
+                  />
+                  {productView === video && !isImg && (
+                    <div className='absolute inset-0 border-2 border-amber-500 rounded-xl bg-amber-50/20'></div>
+                  )}
+                </div>
               ))
             }
           
           </div>
           <div>
-              <div className='border flex flex-col justify-center items-center px-2 py-4 rounded-md'>
+              <div 
+                ref={containerRef}
+                className='border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-white flex flex-col justify-center items-center p-4 rounded-2xl relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300'
+                onMouseMove={handleMouseMove}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
                 {
-                  isImg ? <img className='h-[55vh] w-[20vw] max-sm:w-[80vw] rounded-md' src={productView} alt="" /> : <video controls autoplay muted loop className='h-[55vh] w-[20vw] rounded-md' src={productView} alt="" />
+                  isImg ? (
+                    <div className="relative">
+                      <img 
+                        ref={imageRef}
+                        className='h-[55vh] w-[20vw] max-sm:w-[80vw] rounded-md cursor-crosshair' 
+                        src={productView} 
+                        alt=""
+                      />
+                      {isZooming && (
+                        <div 
+                          className="absolute top-0 left-0 w-full h-full pointer-events-none rounded-md overflow-hidden"
+                          style={{
+                            clipPath: `circle(80px at ${cursorPosition.x}px ${cursorPosition.y}px)`
+                          }}
+                        >
+                          <img 
+                            className='h-[55vh] w-[20vw] max-sm:w-[80vw] rounded-md' 
+                            src={productView} 
+                            alt=""
+                            style={{
+                              transform: 'scale(2.5)',
+                              transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
+                            }}
+                          />
+                        </div>
+                      )}
+                      {isZooming && (
+                        <div 
+                          className="absolute pointer-events-none border-2 border-white rounded-full shadow-lg"
+                          style={{
+                            width: '160px',
+                            height: '160px',
+                            left: `${cursorPosition.x - 80}px`,
+                            top: `${cursorPosition.y - 80}px`,
+                            boxShadow: '0 0 0 2px rgba(0,0,0,0.3), inset 0 0 0 2px rgba(255,255,255,0.8)'
+                          }}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <video controls autoplay muted loop className='h-[55vh] w-[20vw] rounded-md' src={productView} alt="" />
+                  )
                 }
               </div>
-                  <div className='flex justify-between gap-2 mt-4 max-xl:mt-1'>
-                    <button className='border py-2 w-[11vw] max-sm:w-full rounded-md flex justify-center gap-1'> <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M240-80q-33 0-56.5-23.5T160-160v-480q0-33 23.5-56.5T240-720h80q0-66 47-113t113-47q66 0 113 47t47 113h80q33 0 56.5 23.5T800-640v480q0 33-23.5 56.5T720-80H240Zm0-80h480v-480h-80v80q0 17-11.5 28.5T600-520q-17 0-28.5-11.5T560-560v-80H400v80q0 17-11.5 28.5T360-520q-17 0-28.5-11.5T320-560v-80h-80v480Zm160-560h160q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720ZM240-160v-480 480Z"/></svg></span> ADD TO CART</button>
-                    <button className='border py-2 w-[11vw] max-sm:w-full rounded-md flex justify-center gap-1'> <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></span> BUY NOW</button>
+                  <div className='mt-4 max-xl:mt-2'>
+                    <button 
+                      onClick={() => {
+                        const message = "Hi! I'm interested in purchasing Tibb Hair Oil (100ml). Could you please provide more details about the product and pricing?";
+                        const phoneNumber = "919891338607";
+                        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                        window.open(whatsappUrl, '_blank');
+                      }}
+                      className='group bg-yellow-700 hover:bg-yellow-800 cursor-pointer rounded-full px-5 py-3 text-white flex items-center justify-center w-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 hover:-translate-y-1'
+                    >
+                      <span className='transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110'>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                          <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                        </svg>
+                      </span>
+                      <span className='ml-2 transition-all duration-300 group-hover:tracking-wider'>Buy Now</span>
+                    </button>
                   </div>
           </div>
         </div>
-        <div className='overflow-y-scroll w-[45vw] h-[70vh] p-10 pb-4 pt-5 scroll-container max-sm:w-full max-sm:h-auto max-sm:p-0 max-sm:mt-10'>
-                <div className=''> 
-                  <div className=''>
-
-                  <p className='text-[var(--gray-color)] '>Tabib Care</p>
-                  <h1 className='text-4xl font-bold text-yellow-700 mb-3 max-sm:text-3xl'>Tibb Hair Oil (100ml)</h1>
-                  <div className='flex items-center gap-1 w-[4vw] max-sm:w-[15vw] bg-black pl-2 rounded-md'>
-                    <p className='text-white'>4.6</p>
-                    <img className='w-[1vw] max-sm:w-[5vw]' src="img/rating-star.png" alt="" />
-                  </div>
-                  <div className='mt-5 flex items-center'>
-                    <p className=''><span className='font-semibold text-2xl mr-2'>₹339</span> </p>
-                    <div className='flex gap-2'>
-                      <span className='text-[var(--gray-color)] '><del>₹349</del></span> <span className='text-green-600 font-semibold'>20% off</span>
+        <div className='overflow-y-scroll w-[45vw] h-[70vh] p-8 pb-4 pt-6 scroll-container max-sm:w-full max-sm:h-auto max-sm:p-4 max-sm:mt-10 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg'>
+                <div className='space-y-6'> 
+                  <div className='border-b border-gray-200 pb-6'>
+                    <div className='flex items-center gap-2 mb-3'>
+                      <div className='w-2 h-2 bg-amber-500 rounded-full'></div>
+                      <p className='text-amber-600 font-medium text-sm uppercase tracking-wide'>Tabib Care</p>
+                    </div>
+                    <h1 className='text-4xl font-bold text-gray-800 mb-4 leading-tight max-sm:text-3xl'>Tibb Hair Oil</h1>
+                    <div className='flex items-center gap-3 mb-4'>
+                      <div className='flex items-center gap-1 bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-1.5 rounded-full shadow-sm'>
+                        <p className='text-white font-semibold text-sm'>4.6</p>
+                        <img className='w-4 h-4' src="img/rating-star.png" alt="" />
+                      </div>
+                      <span className='text-gray-500 text-sm'>(2,847 reviews)</span>
+                    </div>
+                    <div className='flex items-center gap-4 mb-4'>
+                      <div className='flex items-center gap-2'>
+                        <span className='text-3xl font-bold text-green-600'>₹339</span>
+                        <div className='bg-green-100 px-2 py-1 rounded-md'>
+                          <span className='text-green-700 font-semibold text-sm'>20% OFF</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-gray-400 line-through text-lg'>₹349</span>
+                      <span className='text-sm text-gray-500'>MRP (incl. of all taxes)</span>
+                    </div>
+                    <div className='mt-4 flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg px-3 py-2'>
+                      <div className='w-2 h-2 bg-red-500 rounded-full animate-pulse'></div>
+                      <p className='text-red-600 font-medium text-sm'>
+                        Hurry! Only 10 left in stock
+                      </p>
                     </div>
                   </div>
-                  <p className='text-xs text-red-600 max-sm:text-lg'>
-                    Hurry,Only 10 left!
-                  </p>
-                  </div>
-                  <div className='flex gap-20 mt-5 max-sm:gap-5'>
-                   <div>
-                      <p className='text-[var(--gray-color)] font-semibold mb-5'>Quantity:</p>
-                      <p className='text-[var(--gray-color)] font-semibold mb-18'>Highlights:</p>
-                      <p className='text-[var(--gray-color)] font-semibold'>Description:</p>
-                   </div>
-                   <div>
-                      <p className='border py-1 w-[4vw] max-xl:w-[5vw] max-sm:w-[20vw] flex justify-center border-[var(--gray-color)] font-semibold mb-2.5 '>100 ml</p>
-                      <div className=''>
-                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> For Men & Women</p>
-                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> Suitable for all hair types</p>
-                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> Applied For Nourishment</p>
-                        <p className='flex items-center'> <img src="img/dots.png" alt="" /> Sulfate Free</p>
+                  <div className='space-y-6'>
+                    <div className='bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100'>
+                      <h3 className='text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2'>
+                        <div className='w-1 h-6 bg-blue-500 rounded-full'></div>
+                        Quantity
+                      </h3>
+                      <div className='flex gap-2'>
+                        <div className='bg-white border-2 border-blue-500 text-blue-600 font-semibold px-4 py-2 rounded-lg shadow-sm'>
+                          100 ml
+                        </div>
+                        <div className='bg-gray-100 border border-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed'>
+                          200 ml
+                        </div>
                       </div>
-                      <p>Olive Oil, Coconut Oil, Mustard Oil, black Seeds, Fenugreek Seeds, hibiscus flower, curry leaves e.t.c.
+                    </div>
+
+                    <div className='bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100'>
+                      <h3 className='text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2'>
+                        <div className='w-1 h-6 bg-green-500 rounded-full'></div>
+                        Key Highlights
+                      </h3>
+                      <div className='grid grid-cols-2 gap-3 max-sm:grid-cols-1'>
+                        <div className='flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm'>
+                          <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                          <span className='text-gray-700 font-medium'>For Men & Women</span>
+                        </div>
+                        <div className='flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm'>
+                          <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                          <span className='text-gray-700 font-medium'>All Hair Types</span>
+                        </div>
+                        <div className='flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm'>
+                          <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                          <span className='text-gray-700 font-medium'>Hair Nourishment</span>
+                        </div>
+                        <div className='flex items-center gap-3 bg-white rounded-lg p-3 shadow-sm'>
+                          <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                          <span className='text-gray-700 font-medium'>Sulfate Free</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className='bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-100'>
+                      <h3 className='text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2'>
+                        <div className='w-1 h-6 bg-amber-500 rounded-full'></div>
+                        Natural Ingredients
+                      </h3>
+                      <p className='text-gray-700 leading-relaxed bg-white rounded-lg p-3 shadow-sm'>
+                        Enriched with <span className='font-semibold text-amber-600'>Olive Oil</span>, <span className='font-semibold text-amber-600'>Coconut Oil</span>, <span className='font-semibold text-amber-600'>Mustard Oil</span>, <span className='font-semibold text-amber-600'>Black Seeds</span>, <span className='font-semibold text-amber-600'>Fenugreek Seeds</span>, <span className='font-semibold text-amber-600'>Hibiscus Flower</span>, and <span className='font-semibold text-amber-600'>Curry Leaves</span> for complete hair nourishment.
                       </p>
-                   </div>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <h2 className='text-2xl font-semibold mt-10 border p-4 rounded-t-md'>Specification</h2>
-                  <div className=' border border-t-0 p-4'>
-                    <h3 className='mb-3'>In the Box</h3>
-                    <div className='flex gap-36'>
-                      <p className='text-[var(--gray-color)]'>Pack of </p>
-                      <span className='text-black'>1</span>
+                <div className='mt-8 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100 shadow-lg'>
+                  <h2 className='text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3'>
+                    <div className='w-8 h-8 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center'>
+                      <svg className='w-5 h-5 text-white' fill='currentColor' viewBox='0 0 24 24'>
+                        <path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/>
+                      </svg>
                     </div>
-                  </div>
-                  <div className='border border-t-0 p-4'>
-                    <h3 className='mb-3'>General</h3>
-                    <div className='flex gap-25'>
-                      <div className=''>
-                        <p className='text-[var(--gray-color)] mb-2'>Brand </p>
-                        <p className='text-[var(--gray-color)] mb-2'>Model Name </p>
-                        <p className='text-[var(--gray-color)]  mb-2'>Ideal For </p>
-                        <p className='text-[var(--gray-color)] mb-2'>Applied For</p>
-                        <p className='text-[var(--gray-color)] mb-2'>Type</p>
-                        <p className='text-[var(--gray-color)] mb-2'>Sulfate Free</p>
-                        <p className='text-[var(--gray-color)] mb-2'>Hair Type</p>
-                        <p className='text-[var(--gray-color)] mb-2'>Container</p>
-                        <p className='text-[var(--gray-color)] mb-2 '>Maximum Shelf Life</p>
-                        <p className='text-[var(--gray-color)] mb-13 max-xl:mb-19 max-sm:mb-49'>Composition</p>
-                        <p className='text-[var(--gray-color)] mb-2'>Net Quantity</p>
-                      </div>
-                      <div>
-                        <p className='text-black mb-2'>Tabib</p>
-                        <p className='text-black mb-2'>Tibb Hair Oil</p>
-                        <p className='text-black mb-2'>Men & Women</p>
-                        <p className='text-black mb-2'>Nourishment</p>
-                        <p className='text-black mb-2'>Hair</p>
-                        <p className='text-black mb-2'>Yes</p>
-                        <p className='text-black mb-2'>All Hair Types</p>
-                        <p className='text-black mb-2'>Bottle</p>
-                        <p className='text-black mb-8'>24 Months</p>
-                        <p className='text-black mb-2'>Olive Oil, Coconut Oil, Mustard Oil, black Seeds, Fenugreek Seeds, hibiscus flower, curry leaves e.t.c.
-                        </p>
-                        <p className='text-black mb-2'>100 ml
-                        </p>
+                    Product Specifications
+                  </h2>
+                  
+                  <div className='space-y-4'>
+                    <div className='bg-white rounded-xl p-4 shadow-sm border border-gray-100'>
+                      <h3 className='font-semibold text-gray-800 mb-3 flex items-center gap-2'>
+                        <div className='w-2 h-2 bg-amber-500 rounded-full'></div>
+                        In the Box
+                      </h3>
+                      <div className='flex justify-between items-center'>
+                        <span className='text-gray-600'>Pack of</span>
+                        <span className='font-semibold text-gray-800 bg-amber-100 px-3 py-1 rounded-full'>1 Unit</span>
                       </div>
                     </div>
-                  </div>
-                  <div className=' border border-t-0 p-4 rounded-b-md'>
-                    <h3 className='mb-3'>Other Features</h3>
-                    <div className='flex gap-33'>
-                      <div className='w-[35%]'>
-                        <p className='text-[var(--gray-color)]'>For Hair </p>
+
+                    <div className='bg-white rounded-xl p-4 shadow-sm border border-gray-100'>
+                      <h3 className='font-semibold text-gray-800 mb-4 flex items-center gap-2'>
+                        <div className='w-2 h-2 bg-amber-500 rounded-full'></div>
+                        General Information
+                      </h3>
+                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <div className='space-y-3'>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Brand</span>
+                            <span className='font-medium text-gray-800'>Tabib</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Model Name</span>
+                            <span className='font-medium text-gray-800'>Tibb Hair Oil</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Ideal For</span>
+                            <span className='font-medium text-gray-800'>Men & Women</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Applied For</span>
+                            <span className='font-medium text-gray-800'>Nourishment</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Type</span>
+                            <span className='font-medium text-gray-800'>Hair Oil</span>
+                          </div>
+                        </div>
+                        <div className='space-y-3'>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Sulfate Free</span>
+                            <span className='font-medium text-green-600'>✓ Yes</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Hair Type</span>
+                            <span className='font-medium text-gray-800'>All Types</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Container</span>
+                            <span className='font-medium text-gray-800'>Bottle</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Shelf Life</span>
+                            <span className='font-medium text-gray-800'>24 Months</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <span className='text-gray-600'>Net Quantity</span>
+                            <span className='font-medium text-gray-800'>100 ml</span>
+                          </div>
+                        </div>
                       </div>
-                      <p className='text-black'>Apply Sufficient amount of Oil on the Tip of your fing
-on the scalp and massage it gently about 5-10 minutes Leave it overnight.
-</p>
+                    </div>
+
+                    <div className='bg-white rounded-xl p-4 shadow-sm border border-gray-100'>
+                      <h3 className='font-semibold text-gray-800 mb-3 flex items-center gap-2'>
+                        <div className='w-2 h-2 bg-amber-500 rounded-full'></div>
+                        How to Use
+                      </h3>
+                      <div className='bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg p-4 border border-amber-100'>
+                        <p className='text-gray-700 leading-relaxed'>
+                          Apply sufficient amount of oil on fingertips and massage gently on the scalp for 5-10 minutes. 
+                          <span className='font-semibold text-amber-600'> Leave it overnight</span> for best results and wash with mild shampoo in the morning.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
