@@ -7,7 +7,7 @@ function Product() {
         <div className='bg-gradient-to-r from-amber-50 to-[rgb(250,235,215)] rounded-3xl w-[85vw] h-[70vh] mx-auto p-10 pt-5 mb-10 max-sm:w-[90vw] max-sm:h-auto max-sm:flex max-sm:justify-center max-sm:items-center'>
             <div className='border border-slate-300 w-[15vw] max-sm:w-[70vw] max-sm:h-auto flex flex-col sm:justify-center p-4 bg-black rounded-md'>
         <NavLink to={'/product-detail'}>
-                <img className='h-[35vh] max-xl:h-[25vh] max-xl:w-[20vw] max-sm:w-[65vw] max-sm:h-[40vh] bg-white rounded-md mb-2' src="img/hero-img.png" alt="" />
+                <img className='h-[35vh] max-xl:h-[25vh] max-xl:w-[20vw] max-sm:w-[65vw] max-sm:h-[40vh] bg-white rounded-md mb-2' src="img/prod-1.jpg" alt="" />
                 <h1 className='font-bold text-yellow-700 mb-1 max-sm:text-2xl'>Tibb Hair Oil (100ml)</h1>
                 <p className='text-[var(--gray-color)] mb-1 max-sm:text-xl'>100ml</p>
                 <div className='flex items-center gap-1 w-[4vw] max-sm:w-[15vw] bg-black border border-white pl-2 rounded-md'>

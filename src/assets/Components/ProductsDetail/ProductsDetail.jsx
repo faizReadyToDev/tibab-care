@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 
 function ProductsDetail() {
-  const [productView, setProductView] = useState("img/hero-img.png")
+  const [productView, setProductView] = useState("img/prod-1.jpg")
   const [isImg, setIsImg] = useState(true);
   const [isZooming, setIsZooming] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
@@ -10,28 +10,28 @@ function ProductsDetail() {
   const containerRef = useRef(null);
   
   const imgs = [
-    "img/hero-img.png",
-    "img/productDetail-1.jpg",
-    "img/productDetail-2.jpg",
-    "img/productDetail-3.jpg",
-    "img/productDetail-4.jpg",
-    "img/productDetail-5.jpg",
-    "img/productDetail-6.jpg",
+    "img/prod-1.jpg",
+    "img/prod-2.jpg",
+    "img/prod-3.jpg",
+    "img/prod-4.jpg",
+    "img/prod-5.jpg",
+    "img/prod-6.jpg",
+    
   ]
 
-  const videos = [
-    "img/ProductDetailVideo-1.mp4",
-    "img/ProductDetailVideo-2.mp4"
-  ]
+  // const videos = [
+  //   "img/ProductDetailVideo-1.mp4",
+  //   "img/ProductDetailVideo-2.mp4"
+  // ]
   
   const onClickHandlerImg = (img) => {
     setProductView(img);
     setIsImg(true);
   }
-  const onClickHandlerVideo = (video) => {
-    setProductView(video);
-    setIsImg(false);
-  }
+  // const onClickHandlerVideo = (video) => {
+  //   setProductView(video);
+  //   setIsImg(false);
+  // }
 
   const handleMouseMove = (e) => {
     if (!containerRef.current || !imageRef.current) return;
@@ -68,22 +68,23 @@ function ProductsDetail() {
       
       <div className='flex max-sm:block max-sm:p-4'>
         <div className='flex w-[40vw] gap-6 mt-2 justify-center max-sm:w-full max-sm:gap-2'>
-          <div className='flex flex-col w-[4vw] ml-8 max-sm:w-[16vw] max-sm:ml-0 space-y-3 h-[55vh] overflow-y-auto scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-gray-100'>
+          <div className='flex flex-col w-[4vw] ml-8 max-sm:w-[16vw] max-sm:ml-0 space-y-3 h-[55vh] overflow-y-auto custom-scrollbar'>
             {
               imgs.map((img, index) => (
                 <div key={index} className='relative group'>
                   <img 
                     onClick={() => onClickHandlerImg(img)} 
-                    className='border-2 border-gray-200 hover:border-amber-400 p-2 cursor-pointer rounded-xl transition-all duration-300 hover:shadow-lg transform hover:scale-105' 
+                    className='cursor-pointer transition-all duration-300 hover:opacity-80 transform hover:scale-105' 
                     src={img} 
                     alt="" 
                   />
                   {productView === img && isImg && (
-                    <div className='absolute inset-0 border-2 border-amber-500 rounded-xl bg-amber-50/20'></div>
+                    <div className='absolute inset-0 border-2 border-amber-500'></div>
                   )}
                 </div>
               ))
-            }{
+            }
+            {/* {
               videos.map((video, index) => (
                 <div key={index} className='relative group'>
                   <video  
@@ -97,7 +98,7 @@ function ProductsDetail() {
                   )}
                 </div>
               ))
-            }
+            } */}
           
           </div>
           <div>
